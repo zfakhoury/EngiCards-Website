@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EngiCards - Engineering Flashcards App</title>
+    <title>EngiCards - STEM Flashcards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$']], // Enable $...$
+            displayMath: [['$$', '$$']] // Keep $$...$$
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+        </script>
 </head>
 <body>
     <nav>
@@ -19,10 +33,13 @@
             <button class="mobile-menu-btn" id="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
-            <ul class="nav-links" id="nav-links">
+            <ul class="nav-links main-nav" id="main-nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#demo">Demo</a></li>
                 <li><a href="#try">Try It</a></li>
+                <li><a href="#download" class="download-btn">Download</a></li>
+            </ul>
+            <ul class="nav-links utility-nav" id="utility-nav-links">
                 <li class="lang-switch">
                     <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">
                         <span class="current-lang">EN</span>
@@ -34,7 +51,6 @@
                         <i class="fas fa-moon"></i>
                     </button>
                 </li>
-                <li><a href="#download" class="download-btn">Download</a></li>
             </ul>
         </div>
     </nav>
@@ -42,8 +58,8 @@
     <header>
         <div class="hero">
             <div class="hero-content">
-                <h1>Master Engineering Concepts with EngiCards</h1>
-                <p>The ultimate flashcard app designed specifically for engineering students</p>
+                <h1>Master STEM Concepts with <span>EngiCards</span></h1>
+                <p>The ultimate flashcard app designed specifically for students in Science, Technology, Engineering, and Mathematics</p>
                 <a href="#download" class="cta-button">Download Now</a>
             </div>
             <div class="hero-carousel">
@@ -67,11 +83,21 @@
                         <div class="carousel-slide">
                             <img src="assets/app-screenshot-5.png" alt="EngiCards Screenshot 5">
                         </div>
+                        <div class="carousel-slide">
+                            <img src="assets/app-screenshot-6.png" alt="EngiCards Screenshot 6">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="assets/app-screenshot-7.png" alt="EngiCards Screenshot 7">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="assets/app-screenshot-8.png" alt="EngiCards Screenshot 8">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="assets/app-screenshot-9.png" alt="EngiCards Screenshot 9">
+                        </div>
                     </div>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar"></div>
-                </div>
+                <div class="carousel-dots"></div>
                 <button class="carousel-btn next-btn" aria-label="Next slide">
                     <i class="fas fa-chevron-right"></i>
                 </button>
@@ -80,30 +106,45 @@
     </header>
 
     <section id="features">
-        <h2>Key Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-camera"></i>
-                <h3>Handwriting to LaTeX</h3>
-                <p>Convert your handwritten equations to perfect LaTeX with just a photo</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-sync-alt"></i>
-                <h3>Smart Review System</h3>
-                <p>Track your progress and focus on cards you need to practice more</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-folder"></i>
-                <h3>Organized Decks</h3>
-                <p>Keep your cards organized by subject with customizable decks</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-moon"></i>
-                <h3>Dark Mode</h3>
-                <p>Study comfortably day or night with automatic dark mode</p>
+        <div class="content-wrapper">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Scientific Flashcards</h3>
+                        <p>Display complex formulas and equations beautifully with built-in LaTeX support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-camera-retro"></i>
+                        <h3>LaTeX OCR Feature</h3>
+                        <p>Snap a photo of printed or handwritten formulas and convert them instantly to LaTeX.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>Cards by Topic</h3>
+                        <p>Keep your study material organized with custom decks for different subjects or topics.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-hand-point-up"></i>
+                        <h3>Review Sessions</h3>
+                        <p>Engage with your cards through smooth animations, visual feedback, and gestures.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Community Decks</h3>
+                        <p>Explore and use flashcard decks created and shared by other EngiCards users.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-share-alt"></i>
+                        <h3>Instant Sharing</h3>
+                        <p>Easily share your decks with friends or classmates via a QR code or a direct link.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
 
     <section id="demo">
         <h2>See It in Action</h2>
@@ -118,8 +159,8 @@
     </section>
 
     <section id="try">
-        <h2>Try It Out</h2>
         <div class="try-container">
+            <h2>Try It Out</h2>
             <div class="deck-creator">
                 <div class="editor-container">
                     <div class="editor-header">
@@ -132,11 +173,11 @@
                         <div class="editor-columns">
                             <div class="editor-column">
                                 <div class="column-header">FRONT</div>
-                                <textarea id="front-input" placeholder="Question..."></textarea>
+                                <textarea id="front-input" placeholder="What is the formula for gravitational force? Use $...$ for inline LaTeX, like $F_g$.">What is the formula for gravitational force?</textarea>
                             </div>
                             <div class="editor-column">
                                 <div class="column-header">BACK</div>
-                                <textarea id="back-input" placeholder="Answer..."></textarea>
+                                <textarea id="back-input" placeholder="Use $$...$$ for display math:\n$$ F = G \\frac{m_1 m_2}{r^2} $$">$$F = G \frac{m_1 m_2}{r^2}$$</textarea>
                             </div>
                         </div>
                     </div>
@@ -187,13 +228,12 @@
                 <a href="#download">Download</a>
             </div>
             <div class="footer-social">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://discord.gg/Z8DHJKj8Am"><i class="fab fa-discord"></i></a>
                 <a href="https://github.com/zfakhoury"><i class="fab fa-github"></i></a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 EngiCards. All rights reserved.</p>
+            <p>&copy; 2025 Zouhair Fakhoury | <a href="privacy.html" style="color: inherit;">Privacy Policy</a></p>
         </div>
     </footer>
 

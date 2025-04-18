@@ -1,18 +1,51 @@
 :root {
+    /* Dark Theme (Default) */
+    --logo-blue-dark: #0867FD;  /* User specified dark blue */
+    --logo-blue-light: #55D6F0; /* User specified light cyan */
+    --primary-color: #0A84FF; /* Existing iOS Blue */
+    --secondary-color: #5E5CE6; /* iOS Indigo - can be used for accents if needed */
+    --background-color: #000000; /* Black */
+    --card-background: #1C1C1E; /* Dark Gray */
+    --text-color: #FFFFFF; /* White */
+    --subtle-text-color: rgba(255, 255, 255, 0.65); /* Slightly less subtle */
+    --border-color: rgba(255, 255, 255, 0.2);  /* Slightly more visible border */
+    --shadow-color: rgba(0, 0, 0, 0.5);  /* Sharper shadow */
+    --hover-background-color: #3A3A3C; /* Slightly lighter gray for hover */
+    --font-family-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --default-border-radius: 16px;
+    --button-border-radius: 30px; /* Added for main buttons */
+    --dots-background-dark: rgba(255, 255, 255, 0.20);
+    --carousel-btn-bg-dark: color-mix(in srgb, var(--text-color) 15%, transparent); /* Light bg for dark mode */
+    --carousel-btn-bg-dark-hover: color-mix(in srgb, var(--text-color) 25%, transparent);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] {
+    /* Light Theme */
+    --logo-blue-dark: #0867FD;
+    --logo-blue-light: #55D6F0;
     --primary-color: #007AFF;
     --secondary-color: #5856D6;
     --background-color: #F2F2F7;
     --card-background: #FFFFFF;
     --text-color: #1C1C1E;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    --subtle-text-color: rgba(0, 0, 0, 0.65);
+    --border-color: rgba(0, 0, 0, 0.15); /* Slightly more visible */
+    --shadow-color: rgba(0, 0, 0, 0.2); /* Sharper shadow */
+    --hover-background-color: #E5E5EA; /* Light gray for hover */
+    --font-family-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --default-border-radius: 16px;
+    --button-border-radius: 30px;
+    --dots-background-light: rgba(0, 0, 0, 0.03); /* Dark transparent for light mode - Lighter */
+    --carousel-btn-bg-light: color-mix(in srgb, var(--hover-background-color) 20%, white); /* Even Lighter gray base */
+    --carousel-btn-bg-light-hover: color-mix(in srgb, var(--hover-background-color) 50%, white); /* Lighter hover gray */
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font-family-sans);
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -20,12 +53,15 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Navigation */
 nav {
     background-color: var(--card-background);
-    box-shadow: 0 2px 10px var(--shadow-color);
+    /* box-shadow: 0 1px 0 var(--border-color); */ /* Remove shadow border */
+    border-bottom: 1px solid var(--border-color); /* Use standard border */
     position: fixed;
     width: 100%;
     z-index: 1000;
@@ -36,33 +72,58 @@ nav {
     margin: 0 auto;
     padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Keep space-between for overall layout */
     align-items: center;
     position: relative;
 }
 
 .logo {
+    /* flex: 1; */ /* Remove flex grow if used */
+    /* Ensure logo doesn't take too much space */
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
 }
 
 .logo img {
     height: 40px;
-    border-radius: 50%;
+    border-radius: 8px; /* Sharper logo rounding */
 }
 
 .logo span {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--logo-blue-light), var(--logo-blue-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-left: 0.8rem;
 }
 
+.hero-content h1 span {
+    background: linear-gradient(to right, var(--logo-blue-light), var(--logo-blue-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+/* Style both nav link groups */
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem; /* Slightly reduce gap */
     list-style: none;
     align-items: center;
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+/* Center main navigation links */
+.main-nav {
+    flex-grow: 1; /* Allow main nav to take up space */
+    justify-content: center; /* Center items within this flex container */
+}
+
+/* Utility nav stays aligned to the right (due to space-between on parent) */
+.utility-nav {
+   /* No specific justification needed, relies on parent */
+   flex-shrink: 0; /* Prevent shrinking */
 }
 
 .nav-links li {
@@ -76,29 +137,55 @@ nav {
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    white-space: nowrap; /* Prevent wrapping */
 }
 
 .nav-links a:hover, .theme-toggle:hover, .lang-toggle:hover {
     color: var(--primary-color);
-    background-color: var(--background-color);
-    transform: translateY(-2px);
+    background-color: var(--hover-background-color);
+    transform: translateY(0);
+    border-color: transparent;
+    box-shadow: none;
+    filter: brightness(1.1);
 }
 
-.download-btn {
-    background-color: var(--primary-color);
-    color: white !important;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
+/* Ensure the download link inherits base nav link styles */
+.utility-nav .download-btn {
+  /* It should inherit styles from .nav-links a automatically */
+  /* Reset any potentially conflicting styles if needed */
+  background: none;
+  color: var(--text-color);
+  padding: 0.5rem 1rem; /* Match other nav links */
+  border-radius: 8px; /* Match other nav links */
+  box-shadow: none;
+  font-weight: 500; /* Match other nav links */
+  border: 1px solid transparent; /* Match other nav links */
+}
+
+.utility-nav .download-btn:hover {
+  /* It should inherit hover styles from .nav-links a:hover */
+  color: var(--primary-color);
+  background-color: var(--hover-background-color);
+  transform: none; /* Reset transform from old button style */
+  box-shadow: none;
+  filter: none; /* Reset filter */
+  border-color: transparent;
+}
+
+.utility-nav .download-btn:active {
+  /* Reset active styles */
+  transform: none;
+  filter: none;
+  box-shadow: none;
 }
 
 /* Hero Section */
 header {
     padding-top: 80px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
+    background-color: var(--background-color);
+    /* color: white; */ /* REMOVE: Let text color inherit from theme */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -121,28 +208,43 @@ header {
 }
 
 .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.2rem; /* Slightly larger */
+    margin-bottom: 1.5rem; /* More space */
+    font-weight: 700;
+    color: var(--text-color); /* Revert to standard text color */
+    line-height: 1.2;
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    color: var(--subtle-text-color); /* Use subtle text color */
 }
 
 .cta-button {
     display: inline-block;
-    background-color: white;
-    color: var(--primary-color);
-    padding: 1rem 2rem;
-    border-radius: 25px;
+    background: linear-gradient(to bottom right, var(--logo-blue-light), var(--logo-blue-dark));
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 12px; /* Consistent Pill Shape */
     text-decoration: none;
     font-weight: 600;
-    transition: transform 0.3s ease;
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: 0 2px 5px var(--shadow-color); /* Subtle elevation */
+    transition: all 0.2s ease-out;
 }
 
 .cta-button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    filter: brightness(1.1);
+}
+
+.cta-button:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 1px 2px var(--shadow-color);
+    filter: brightness(0.95);
 }
 
 .hero-image {
@@ -152,14 +254,26 @@ header {
 .hero-image img {
     width: 100%;
     max-width: 500px;
-    border-radius: 20px;
+    border-radius: var(--default-border-radius); /* Use variable */
 }
 
 /* Features Section */
 #features {
     padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin: 0; /* Remove margin to allow full width */
+    border-top: 1px solid var(--border-color); /* Add subtle separator */
+    width: 100%; /* Ensure full width */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center the content horizontally */
+}
+
+#features .content-wrapper {
+    max-width: 1200px; /* Keep content centered */
+    margin: 0 auto; /* Center the content */
+    padding: 0 2rem; /* Add padding for content */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items vertically */
 }
 
 .features-grid {
@@ -167,37 +281,69 @@ header {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    justify-content: center; /* Center the grid items horizontally */
+    width: 100%; /* Ensure grid takes full width */
 }
 
 .feature-card {
     background-color: var(--card-background);
-    padding: 2rem;
-    border-radius: 20px;
+    padding: 2rem 1.5rem; /* Adjust padding slightly */
+    border-radius: var(--default-border-radius);
     text-align: center;
-    box-shadow: 0 5px 15px var(--shadow-color);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex; /* Use Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    /* align-items: center; */ /* text-align center should handle this */
+    justify-content: flex-start; /* Align content towards the top */
+    min-height: 220px; /* Ensure a minimum height for consistency */
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
+    background-color: var(--hover-background-color);
+    box-shadow: 0 6px 15px var(--shadow-color); /* Enhanced hover shadow */
 }
 
 .feature-card i {
     font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem; /* Increase space below icon */
+    background: linear-gradient(to bottom right, var(--logo-blue-light), var(--logo-blue-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block; /* Needed for bg clip */
+}
+
+.feature-card h3 {
+    margin-bottom: 0.75rem; /* Add space below heading */
+    font-weight: 600; /* Slightly bolder heading */
+}
+
+.feature-card p {
+    font-size: 0.95rem; /* Slightly smaller text */
+    line-height: 1.5; /* Adjust line height */
+    color: var(--subtle-text-color);
+    /* Remove default browser margins */
+    margin-top: 0;
+    margin-bottom: 0; 
 }
 
 /* Try It Section */
 #try {
-    padding: 4rem 2rem;
-    background-color: var(--card-background);
+    padding: 4rem;
+    background-color: var(--background-color); /* Match body background */
+    border-top: 1px solid var(--border-color); /* Add subtle separator */
+}
+#try h2 {
+    margin-bottom: 2rem; /* Adjust value as needed */
 }
 
 .try-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding-top: 20px;
+    text-align: center;
 }
 
 .deck-creator {
@@ -233,7 +379,7 @@ header {
     height: 100%;
     backface-visibility: hidden;
     background-color: var(--card-background);
-    border: 1px solid var(--text-color);
+    border: 1px solid var(--border-color); /* Use border color var */
     border-radius: 25px;
     box-shadow: 0 5px 15px var(--shadow-color);
     padding: 1.5rem;
@@ -248,15 +394,15 @@ header {
 }
 
 .empty-state {
-    color: var(--text-color);
-    opacity: 0.6;
+    color: var(--subtle-text-color); /* Use subtle text color */
+    opacity: 1; /* Remove default opacity */
     margin-bottom: 1rem;
 }
 
 .drag-area {
     width: 100%;
     height: 120px;
-    border: 2px dashed var(--text-color);
+    border: 2px dashed var(--subtle-text-color); /* Dashed subtle color */
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -265,10 +411,17 @@ header {
     gap: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    background-color: var(--card-background); /* Match card background */
 }
 
 .drag-area i {
     font-size: 2rem;
+    /* Apply gradient */
+    background: linear-gradient(to bottom right, var(--logo-blue-light), var(--logo-blue-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Fallback */
     color: var(--primary-color);
 }
 
@@ -289,7 +442,7 @@ header {
 .icon-btn {
     background: none;
     border: none;
-    color: var(--text-color);
+    color: var(--subtle-text-color); /* Use subtle text color */
     cursor: pointer;
     font-size: 1rem;
     padding: 0.25rem 0.5rem;
@@ -298,7 +451,8 @@ header {
 }
 
 .icon-btn:hover {
-    background-color: var(--background-color);
+    background-color: var(--hover-background-color);
+    color: var(--primary-color); /* Highlight on hover */
 }
 
 .button-group {
@@ -326,12 +480,18 @@ header {
     color: white;
 }
 
+.primary-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px);
+}
+
 .secondary-btn {
-    background-color: var(--background-color);
+    background-color: var(--hover-background-color); /* Use hover color */
     color: var(--text-color);
 }
 
-.primary-btn:hover, .secondary-btn:hover {
+.secondary-btn:hover {
+    filter: brightness(1.1); /* Slightly brighten */
     transform: translateY(-2px);
 }
 
@@ -339,8 +499,9 @@ header {
 #download {
     padding: 4rem 2rem;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
+    background-color: var(--card-background); /* Use card background */
+    color: var(--text-color); /* Use default text color */
+    border-top: 1px solid var(--border-color); /* Add subtle separator */
 }
 
 .download-container {
@@ -361,12 +522,14 @@ header {
 /* Footer */
 footer {
     background-color: var(--card-background);
-    padding: 4rem 2rem 2rem;
+    padding: 2rem 2rem; /* Adjust padding as needed */
+    border-top: 1px solid var(--border-color); /* Use border variable */
+    position: relative; /* Ensure positioning context */
 }
 
 .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1200px; /* Keep content centered */
+    margin: 0 auto; /* Center the content */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -381,7 +544,7 @@ footer {
 
 .footer-logo img {
     height: 30px;
-    border-radius: 50%;
+    border-radius: 6px; /* Sharper */
 }
 
 .footer-links {
@@ -391,23 +554,46 @@ footer {
 
 .footer-links a {
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--subtle-text-color); /* Use subtle color */
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color); /* Highlight on hover */
 }
 
 .footer-social {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .footer-social a {
-    color: var(--text-color);
-    font-size: 1.5rem;
+    color: var(--subtle-text-color); /* Use subtle color */
+    font-size: 1.75rem;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: var(--primary-color); /* Highlight on hover */
 }
 
 .footer-bottom {
+    width: 100vw; /* Full viewport width */
+    margin-left: calc(-50vw + 50%); /* Align with full screen */
     text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
+    padding-top: 1.7rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--subtle-text-color);
+}
+
+.footer-bottom a {
+    color: inherit; /* Inherit subtle color */
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+    color: var(--primary-color); /* Highlight on hover */
 }
 
 /* Responsive Design */
@@ -440,6 +626,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    color: var(--text-color); /* Ensure icon uses text color */
 }
 
 .theme-toggle i {
@@ -451,10 +638,12 @@ footer {
     padding: 4rem 2rem;
     text-align: center;
     width: 100%;
+    border-top: 1px solid var(--border-color); /* Add subtle separator */
 }
 
 .demo-container {
     max-width: 1200px;
+    padding-top: 2rem;
     margin: 0 auto;
 }
 
@@ -470,12 +659,15 @@ footer {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+    /* border: 1px solid var(--border-color); */
+    /* border-radius: var(--default-border-radius); */
 }
 
 video {
     left: 50%;
     max-height: 50%;
     max-width: 50%;
+    border-radius: var(--default-border-radius);
 }
 
 /* Add hover effects for drag areas */
@@ -486,16 +678,11 @@ video {
 
 .drag-area.drag-hover {
     border-color: var(--primary-color);
-    background-color: rgba(0, 122, 255, 0.1);
+    background-color: var(--hover-background-color); /* Use hover color */
 }
 
-/* Dark mode styles */
-[data-theme="dark"] {
-    --background-color: #000000;
-    --card-background: #1C1C1E;
-    --text-color: #FFFFFF;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-}
+/* Dark mode styles - REMOVED as dark is now default */
+/* [data-theme="dark"] { ... } */
 
 /* Update the nav-links li to ensure consistent alignment */
 .nav-links li {
@@ -504,13 +691,13 @@ video {
 }
 
 .drag-area {
-    border: 2px dashed var(--text-color);
+    border: 2px dashed var(--subtle-text-color); /* Use subtle color */
     background-color: var(--card-background);
-    opacity: 0.8;
+    opacity: 1; /* Remove default opacity */
 }
 
 .drag-area p {
-    color: var(--text-color);
+    color: var(--subtle-text-color); /* Use subtle color */
 }
 
 .drag-area i {
@@ -519,11 +706,11 @@ video {
 
 /* Update processing overlay for better contrast in both themes */
 .processing-overlay {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.8); /* Keep dark overlay */
 }
 
 .spinner {
-    border-color: var(--text-color);
+    border-color: var(--subtle-text-color); /* Use subtle color */
     border-top-color: var(--primary-color);
 }
 
@@ -537,35 +724,47 @@ video {
     width: 100%;
     max-width: 800px;
     background: var(--card-background);
-    border-radius: 12px;
+    border-radius: var(--default-border-radius); /* Use variable */
     box-shadow: 0 2px 10px var(--shadow-color);
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 .editor-header {
     display: flex;
     justify-content: flex-end;
     padding: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-color); /* Use border variable */
 }
 
 .preview-btn {
     padding: 0.5rem 1rem;
-    background: none;
-    border: none;
-    color: var(--text-color);
+    background: var(--hover-background-color);
+    border: 1px solid var(--border-color);
+    color: var(--subtle-text-color);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    border-radius: 8px;
+    opacity: 1;
+    transition: all 0.2s ease-out;
+    border-radius: 8px; /* Keep smaller radius for small buttons */
+    box-shadow: 0 1px 2px var(--shadow-color);
 }
 
 .preview-btn:hover {
     opacity: 1;
-    background-color: var(--background-color);
+    background-color: var(--hover-background-color);
+    color: var(--primary-color);
+    transform: translateY(-1px); /* Subtle lift */
+    box-shadow: 0 2px 4px var(--shadow-color);
+    filter: brightness(1.1);
+}
+
+.preview-btn:active {
+    transform: translateY(0px); /* Press down */
+    box-shadow: 0 1px 1px var(--shadow-color);
+    filter: brightness(0.95);
 }
 
 .preview-btn i {
@@ -586,67 +785,86 @@ video {
 }
 
 .column-header {
-    color: var(--text-color);
+    color: var(--subtle-text-color); /* Use subtle color */
     font-size: 0.8rem;
     font-weight: 500;
-    opacity: 0.6;
+    opacity: 1; /* Remove default opacity */
     letter-spacing: 0.5px;
 }
 
 textarea {
     width: 100%;
-    height: 150px;
+    /* height: 150px; */ /* Remove fixed height, let it auto-resize */
+    min-height: 150px; /* Set min height */
     padding: 1rem;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Keep smaller radius */
+    background: var(--background-color); /* Match body background */
     color: var(--text-color);
     font-size: 1rem;
-    resize: none;
+    resize: vertical; /* Allow vertical resize */
     transition: all 0.3s ease;
 }
 
 textarea:focus {
     outline: none;
     border-color: var(--primary-color);
+    background-color: var(--card-background); /* Slightly different bg on focus */
 }
 
 /* Preview styles */
 .preview-container {
     display: none;
-    width: 100%;
-    max-width: 800px;
-    height: 400px;
+    /* width: 100%; */ /* Let it size based on content */
+    /* max-width: 800px; */ /* Remove max-width */
+    height: auto; /* Adjust height automatically */
     position: relative;
+    flex-direction: column; /* Stack card and buttons */
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem; /* Adjust gap */
+    padding: 1rem; /* Add padding for smaller screens */
+    opacity: 0; /* Start hidden for fade-in */
+    transition: opacity 0.3s ease;
 }
 
 .preview-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Horizontal buttons */
     gap: 1rem;
+    margin-top: 0; /* Remove margin */
 }
 
 .edit-btn, .flip-btn {
-    padding: 0.5rem 1rem;
-    background: none;
-    border: none;
+    padding: 0.6rem 1.2rem;
+    background: var(--hover-background-color);
+    border: 1px solid var(--border-color);
     color: var(--text-color);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    border-radius: 8px;
+    opacity: 1;
+    transition: all 0.2s ease-out;
+    border-radius: 8px; /* Keep smaller radius */
     white-space: nowrap;
+    box-shadow: 0 1px 2px var(--shadow-color);
+    font-weight: 500;
 }
 
 .edit-btn:hover, .flip-btn:hover {
     opacity: 1;
-    background-color: var(--background-color);
+    background-color: var(--hover-background-color);
+    color: var(--primary-color);
+    filter: brightness(1.1);
+    transform: translateY(-1px); /* Subtle lift */
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.edit-btn:active, .flip-btn:active {
+    transform: translateY(0px); /* Press down */
+    box-shadow: 0 1px 1px var(--shadow-color);
+    filter: brightness(0.95);
 }
 
 .edit-btn i, .flip-btn i {
@@ -660,6 +878,7 @@ textarea:focus {
     cursor: pointer;
     transform-style: preserve-3d;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 1rem; /* Add margin below card */
 }
 
 .preview-card.flipped {
@@ -672,7 +891,8 @@ textarea:focus {
     height: 100%;
     backface-visibility: hidden;
     background: var(--card-background);
-    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--default-border-radius); /* Use variable */
     padding: 1.5rem;
     display: flex;
     align-items: center;
@@ -698,12 +918,28 @@ textarea:focus {
         flex-direction: column;
         height: auto;
         padding: 1rem;
+        /* display: flex; */ /* Ensure it's flex for centering */
+        /* align-items: center; */ /* Center items */
+    }
+
+    .preview-card {
+        width: 90%; /* Make card wider on mobile */
+        max-width: 320px; /* But not too wide */
+        height: auto; /* Adjust height */
+        min-height: 300px; /* Minimum height */
+        margin-bottom: 1rem; /* Space below card */
     }
 
     .preview-buttons {
         flex-direction: row;
         justify-content: center;
         margin-top: 1rem;
+        width: 100%; /* Full width buttons container */
+    }
+
+    .edit-btn, .flip-btn {
+        flex-grow: 1; /* Make buttons fill space */
+        justify-content: center; /* Center icon/text */
     }
 }
 
@@ -722,13 +958,16 @@ textarea:focus {
 @media (max-width: 768px) {
     .nav-content {
         padding: 1rem;
+        /* Ensure mobile button is considered */
+        justify-content: space-between; 
     }
 
     .mobile-menu-btn {
         display: block;
         z-index: 100;
         padding: 0.5rem;
-        margin-left: auto;
+        /* margin-left: auto; */ /* Remove auto margin if present */
+        order: 3; /* Place button last visually */
         transition: transform 0.3s ease;
     }
 
@@ -736,8 +975,18 @@ textarea:focus {
         transform: rotate(90deg);
     }
 
-    .nav-links {
+    /* Hide desktop link groups */
+    .main-nav,
+    .utility-nav {
         display: none;
+    }
+
+    /* Style the combined mobile menu container (if we use the old one) */
+    /* OR Adjust script to handle two lists */
+    /* Let's assume script puts ALL li items into the #nav-links container when mobile */
+    #nav-links {
+        /* If #nav-links is the container used by JS */
+        display: none; /* Initially hidden */
         position: absolute;
         top: 100%;
         left: 0;
@@ -745,31 +994,39 @@ textarea:focus {
         background-color: var(--card-background);
         flex-direction: column;
         padding: 0;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 20px var(--shadow-color);
         gap: 0;
         z-index: 99;
         overflow: hidden;
         border-radius: 0 0 16px 16px;
+        border: 1px solid var(--border-color);
+        border-top: none;
     }
 
-    .nav-links.active {
-        display: flex;
+    #nav-links.active {
+        display: flex; /* Show when active */
     }
 
-    .nav-links li {
+    #nav-links li { /* Style list items within the mobile menu */
         width: 100%;
         opacity: 0;
         transform: translateY(-20px);
         background: var(--card-background);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        display: flex;
+        border-bottom: 1px solid var(--border-color);
+        display: flex; /* Keep flex for alignment */
+        justify-content: center; /* Center content within li */
         align-items: center;
     }
 
-    .nav-links.active li {
+    #nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    #nav-links.active li {
         animation: slideInFade 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
+    /* Animation remains the same */
     @keyframes slideInFade {
         from {
             opacity: 0;
@@ -783,14 +1040,16 @@ textarea:focus {
         }
     }
 
-    /* Modern sequential animation delays */
-    .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
-    .nav-links.active li:nth-child(2) { animation-delay: 0.15s; }
-    .nav-links.active li:nth-child(3) { animation-delay: 0.2s; }
-    .nav-links.active li:nth-child(4) { animation-delay: 0.25s; }
-    .nav-links.active li:nth-child(5) { animation-delay: 0.3s; }
+    /* Animation delays might need slight adjustment if order changes */
+    #nav-links.active li:nth-child(1) { animation-delay: 0.1s; } /* Features */
+    #nav-links.active li:nth-child(2) { animation-delay: 0.15s; } /* Demo */
+    #nav-links.active li:nth-child(3) { animation-delay: 0.2s; } /* Try It */
+    #nav-links.active li:nth-child(4) { animation-delay: 0.25s; } /* Lang */
+    #nav-links.active li:nth-child(5) { animation-delay: 0.3s; } /* Theme */
+    #nav-links.active li:nth-child(6) { animation-delay: 0.35s; } /* Download */
 
-    .nav-links a {
+
+    #nav-links a {
         display: block;
         padding: 1rem;
         width: 100%;
@@ -800,7 +1059,7 @@ textarea:focus {
         z-index: 1;
     }
 
-    .nav-links a::before {
+    #nav-links a::before {
         content: '';
         position: absolute;
         top: 0;
@@ -813,12 +1072,15 @@ textarea:focus {
         transition: opacity 0.3s ease;
     }
 
-    .nav-links a:hover {
+    #nav-links a:hover {
         color: var(--primary-color);
         transform: translateX(5px);
+        background-color: var(--hover-background-color); /* Add hover background */
     }
 
-    .theme-toggle {
+    /* Adjust toggles for mobile menu */
+    .theme-toggle,
+    .lang-toggle {
         width: 100%;
         padding: 1rem;
         display: flex;
@@ -833,29 +1095,49 @@ textarea:focus {
         color: var(--text-color);
     }
 
-    .theme-toggle:hover {
-        background-color: var(--background-color);
+    .theme-toggle:hover,
+    .lang-toggle:hover {
+        background-color: var(--hover-background-color);
         color: var(--primary-color);
-        transform: translateX(5px);
+        transform: none; /* Remove hover transform in mobile menu */
     }
 
-    .theme-toggle i {
+    .theme-toggle i,
+    .lang-toggle i {
         font-size: 1.1rem;
     }
+    
+    .lang-switch .lang-toggle {
+         gap: 0.5rem; /* Add gap back */
+    }
 
-    .download-btn {
-        margin: 1rem;
-        padding: 0.8rem 1.5rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    /* Adjust download button for mobile menu */
+    #nav-links .download-btn {
+        /* These properties should be inherited from #nav-links a */
+        display: block;
+        padding: 1rem;
+        width: 100%;
+        text-align: center;
         transition: all 0.3s ease;
+        position: relative; 
+        z-index: 1;
+        /* Reset potentially conflicting styles */
+        margin: 0;
+        border-radius: 0;
+        background: var(--card-background); /* Match menu background initially */
+        color: var(--text-color) !important; /* Use text color */
+        box-shadow: none;
+        font-weight: 500; /* Match other mobile links */
     }
 
-    .download-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+    #nav-links .download-btn:hover {
+       /* These properties should be inherited from #nav-links a:hover */
+       color: var(--primary-color) !important; /* Ensure hover color overrides */
+       transform: translateX(5px); /* Match other mobile links */
+       background-color: var(--hover-background-color); /* Match hover background */
+       box-shadow: none;
     }
-} 
+}
 
 /* Language switcher styles */
 .lang-toggle {
@@ -865,6 +1147,7 @@ textarea:focus {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    color: var(--text-color); /* Ensure icon uses text color */
 }
 
 .lang-toggle i {
@@ -877,14 +1160,15 @@ textarea:focus {
         width: 100%;
         padding: 1rem;
         justify-content: center;
+        color: var(--text-color); /* Ensure text color */
     }
-    
+
     .lang-toggle:hover {
-        background-color: var(--background-color);
+        background-color: var(--hover-background-color); /* Use hover variable */
         color: var(--primary-color);
         transform: translateX(5px);
     }
-} 
+}
 
 /* Add smooth transitions for text changes */
 h1, h2, h3, p, a, button, span, .column-header {
@@ -894,24 +1178,26 @@ h1, h2, h3, p, a, button, span, .column-header {
 /* Add a class for fade effect */
 .translating {
     opacity: 0;
-} 
+}
 
 /* Add carousel styles */
 .hero-carousel {
     flex: 1;
     position: relative;
     max-width: 500px;
-    height: 120%;
+    height: 100%; /* Slightly larger */
     margin: 0 auto;
     display: flex;
     align-items: center;
+    padding-bottom: 40px; /* Add space below for dots */
+    /* overflow: hidden; */ /* Consider if clipping is needed */
 }
 
 .carousel-container {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: var(--default-border-radius);
 }
 
 .carousel-track {
@@ -944,21 +1230,30 @@ h1, h2, h3, p, a, button, span, .column-header {
     height: 40px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--primary-color);
+    background-color: var(--carousel-btn-bg-dark); /* Default to dark theme variable */
+    color: var(--text-color);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease-out;
     z-index: 2;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+[data-theme="light"] .carousel-btn {
+    background-color: var(--carousel-btn-bg-light); /* Override for light theme */
+    color: var(--text-color); /* Ensure icon color is correct in light */
 }
 
 .carousel-btn:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: var(--carousel-btn-bg-dark-hover); /* Default hover */
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+[data-theme="light"] .carousel-btn:hover {
+     background-color: var(--carousel-btn-bg-light-hover); /* Override hover for light */
 }
 
 .carousel-btn i {
@@ -966,11 +1261,13 @@ h1, h2, h3, p, a, button, span, .column-header {
 }
 
 .prev-btn {
-    left: 0px;
+    /* left: -25px; */
+    left: 25px; /* Position inside */
 }
 
 .next-btn {
-    right: 0px;
+    /* right: -25px; */
+    right: 25px; /* Position inside */
 }
 
 /* Responsive adjustments */
@@ -985,11 +1282,13 @@ h1, h2, h3, p, a, button, span, .column-header {
     }
 
     .prev-btn {
-        left: 5px;
+        /* left: -30px; */
+        left: 0px; /* Adjust for smaller screens */
     }
 
     .next-btn {
-        right: 5px;
+        /* right: -30px; */
+        right: 0px; /* Adjust for smaller screens */
     }
 
     .carousel-slide img {
@@ -1038,36 +1337,46 @@ h1, h2, h3, p, a, button, span, .column-header {
     .next-btn {
         right: 5px;
     }
-} 
+}
 
-/* Add progress pill styles */
-.progress-container {
+/* Add Carousel Dot Indicator Styles */
+.carousel-dots {
     position: absolute;
-    bottom: 2.5%;
+    bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50%;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
-    overflow: hidden;
+    display: flex;
+    gap: 10px;
     z-index: 3;
+    /* background-color: color-mix(in srgb, var(--card-background) 80%, transparent); */
+    background-color: var(--dots-background-dark); /* Use variable */
+    padding: 8px 16px;
+    border-radius: 16px;
+    transition: background-color 0.2s ease-out;
 }
 
-.progress-bar {
-    width: 100%;
-    height: 100%;
-    background: white;
-    transform-origin: left;
-    animation: progressFill 4s linear;
-    padding: 20px 0;
+[data-theme="light"] .carousel-dots {
+    background-color: var(--dots-background-light); /* Apply light mode background */
 }
 
-@keyframes progressFill {
-    from {
-        transform: scaleX(0);
-    }
-    to {
-        transform: scaleX(1);
-    }
+.carousel-dots .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    /* background-color: color-mix(in srgb, var(--text-color) 25%, transparent); */
+    background-color: color-mix(in srgb, var(--text-color) 40%, transparent); /* Reset inactive dot opacity */
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+    /* background-color: var(--primary-color); */
+    background-color: var(--text-color); /* Reset active dot color to text color */
+    transform: scale(1.1);
+}
+
+[data-theme="light"] .carousel-dots .dot.active {
+    background-color: white; /* Override active dot color for light theme */
 }
