@@ -110,8 +110,6 @@ nav {
     gap: 1.5rem; /* Slightly reduce gap */
     list-style: none;
     align-items: center;
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
 }
 
 /* Center main navigation links */
@@ -139,46 +137,15 @@ nav {
     border-radius: 8px;
     transition: all 0.2s ease;
     border: 1px solid transparent;
-    white-space: nowrap; /* Prevent wrapping */
+
 }
 
 .nav-links a:hover, .theme-toggle:hover, .lang-toggle:hover {
     color: var(--primary-color);
     background-color: var(--hover-background-color);
-    transform: translateY(0);
     border-color: transparent;
     box-shadow: none;
     filter: brightness(1.1);
-}
-
-/* Ensure the download link inherits base nav link styles */
-.utility-nav .download-btn {
-  /* It should inherit styles from .nav-links a automatically */
-  /* Reset any potentially conflicting styles if needed */
-  background: none;
-  color: var(--text-color);
-  padding: 0.5rem 1rem; /* Match other nav links */
-  border-radius: 8px; /* Match other nav links */
-  box-shadow: none;
-  font-weight: 500; /* Match other nav links */
-  border: 1px solid transparent; /* Match other nav links */
-}
-
-.utility-nav .download-btn:hover {
-  /* It should inherit hover styles from .nav-links a:hover */
-  color: var(--primary-color);
-  background-color: var(--hover-background-color);
-  transform: none; /* Reset transform from old button style */
-  box-shadow: none;
-  filter: none; /* Reset filter */
-  border-color: transparent;
-}
-
-.utility-nav .download-btn:active {
-  /* Reset active styles */
-  transform: none;
-  filter: none;
-  box-shadow: none;
 }
 
 /* Hero Section */
@@ -603,10 +570,6 @@ footer {
         text-align: center;
     }
 
-    .nav-links {
-        display: none;
-    }
-
     .footer-content {
         flex-direction: column;
         gap: 2rem;
@@ -976,15 +939,11 @@ textarea:focus {
     }
 
     /* Hide desktop link groups */
-    .main-nav,
-    .utility-nav {
+    .nav-links {
         display: none;
     }
 
-    /* Style the combined mobile menu container (if we use the old one) */
-    /* OR Adjust script to handle two lists */
-    /* Let's assume script puts ALL li items into the #nav-links container when mobile */
-    #nav-links {
+    .nav-links {
         /* If #nav-links is the container used by JS */
         display: none; /* Initially hidden */
         position: absolute;
@@ -1003,11 +962,11 @@ textarea:focus {
         border-top: none;
     }
 
-    #nav-links.active {
+    .nav-links.active {
         display: flex; /* Show when active */
     }
 
-    #nav-links li { /* Style list items within the mobile menu */
+    .nav-links li { /* Style list items within the mobile menu */
         width: 100%;
         opacity: 0;
         transform: translateY(-20px);
@@ -1018,11 +977,11 @@ textarea:focus {
         align-items: center;
     }
 
-    #nav-links li:last-child {
+    .nav-links li:last-child {
         border-bottom: none;
     }
 
-    #nav-links.active li {
+    .nav-links.active li {
         animation: slideInFade 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
@@ -1059,7 +1018,7 @@ textarea:focus {
         z-index: 1;
     }
 
-    #nav-links a::before {
+    .nav-links a::before {
         content: '';
         position: absolute;
         top: 0;
@@ -1072,7 +1031,7 @@ textarea:focus {
         transition: opacity 0.3s ease;
     }
 
-    #nav-links a:hover {
+    .nav-links a:hover {
         color: var(--primary-color);
         transform: translateX(5px);
         background-color: var(--hover-background-color); /* Add hover background */
@@ -1099,7 +1058,6 @@ textarea:focus {
     .lang-toggle:hover {
         background-color: var(--hover-background-color);
         color: var(--primary-color);
-        transform: none; /* Remove hover transform in mobile menu */
     }
 
     .theme-toggle i,

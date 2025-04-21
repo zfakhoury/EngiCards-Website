@@ -14,6 +14,9 @@
             padding: 2rem;
             background-color: var(--background-color);
             color: var(--text-color);
+            font-size: 16px; /* Base font size */
+            line-height: 1.5; /* Improved readability */
+            animation: fadeIn 1s ease-in; /* Apply fade-in animation */
         }
         h1, h2, h3 {
             color: var(--header-color);
@@ -32,12 +35,48 @@
         }
         a {
             color: var(--primary-color);
+            transition: color 0.3s ease; /* Smooth transition for color change */
+        }
+        a:hover {
+            color: darken(var(--primary-color), 10%); /* Darken color on hover */
         }
         .container {
             background-color: var(--card-background);
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 2px 10px var(--shadow-color);
+            margin: 1rem; /* Add margin for better spacing on mobile */
+        }
+    
+        /* Mobile styles */
+        @media (max-width: 600px) {
+            body {
+                padding: 0.75rem; /* Reduce padding on mobile */
+                font-size: 14px; /* Slightly smaller font size */
+            }
+            .container {
+                padding: 1rem; /* Reduce padding in the container */
+            }
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Hover Effects */
+        a {
+            color: var(--primary-color);
+            transition: color 0.2s ease; /* Smooth transition for color change */
+        }
+
+        a:hover {
+            color: darken(var(--primary-color), 10%); /* Darken color on hover */
         }
     </style>
 </head>
